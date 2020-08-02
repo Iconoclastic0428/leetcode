@@ -5,7 +5,7 @@ class Solution {
         int p2 = 0;
         int p3 = 0;
         int p5 = 0;
-        
+   // 由于这个数组中的所有数都是2，3，5构成的，因而可以asynchronously比较每一个数乘2，3，5以后的结果。     
         for (int i = 1; i < n; i++) {
             res[i] = Math.min(res[p2] * 2, Math.min(res[p3] * 3, res[p5] * 5) );
             if (res[i] == res[p2] * 2) {

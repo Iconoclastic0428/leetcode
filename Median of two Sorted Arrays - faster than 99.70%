@@ -1,0 +1,74 @@
+class Solution {
+    private int lengthA;
+    private int lengthB;
+    private int[] returnArray;
+    private int LA;
+    private int LB;
+    private int pos;
+    private int[] nums1;
+    private int[] nums2;
+    public Solution(int[] nums1, int[]nums2) {
+    	lengthA = 0;
+        lengthB = 0;
+        pos = 0;
+        LA = nums1.length;
+        LB = nums2.length;
+        returnArray = new int [nums1.length + nums2.length];
+        this.nums1 = nums1;
+        this.nums2 = nums2;
+    }
+    public double findMedianSortedArrays() {
+    	if(LA == 0) {
+    		if(LB % 2 == 1){
+                return nums2[LB / 2];
+            }
+            else{
+                return (double)(nums2[LB / 2 - 1] + nums2[LB / 2]) / 2;
+            }
+    	}
+    	else if(LB == 0) {
+    		if(LA % 2 == 1){
+                return nums1[LA / 2];
+            }
+            else{
+                return (double)(nums1[LA / 2 - 1] + nums1[LA / 2]) / 2;
+            }
+    	}
+        while(lengthA != LA && lengthB != LB){
+            if(nums1[lengthA] <= nums2[lengthB]){
+                returnArray[pos] = nums1[lengthA];
+                lengthA += 1;
+                pos += 1;
+                if(lengthA == nums1.length && lengthB != nums2.length){
+                    for(int i = lengthB; i < nums2.length; i++){
+                        returnArray[pos] = nums2[i];
+                        pos += 1;
+                    }
+                }
+            }
+            else if(nums1[lengthA] > nums2[lengthB]){
+                returnArray[pos] = nums2[lengthB];
+                lengthB += 1;
+                pos += 1;
+                if(lengthB == nums2.length && lengthA != nums1.length){
+                    for(int i = lengthA; i < nums1.length; i++){
+                        returnArray[pos] = nums1[i];
+                        pos += 1;
+                    }
+                }
+            }
+        }
+        if(pos % 2 == 1){
+            return returnArray[pos / 2];
+        }
+        else{
+            return (double)(returnArray[pos / 2 - 1] + returnArray[pos / 2]) / 2;
+        }
+    }
+    public static void main(String[] args) {
+    	int nums1[] = new int[] {};
+    	int nums2[] = new int[] {2, 4};
+    	Solution p = new Solution(nums1, nums2);
+    	System.out.println(p.findMedianSortedArrays());
+    }
+}
